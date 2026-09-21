@@ -135,14 +135,16 @@ def banda_monto(monto_cop):
         if not nums:
             continue
         if op.lower().startswith("hasta"):
-            lo, hi = 0.0, nums[0]
+            lo, hi, abierta = 0.0, nums[0], False
         elif len(nums) >= 2:
-            lo, hi = nums[0], nums[1]
+            lo, hi, abierta = nums[0], nums[1], False
         else:
-            lo, hi = nums[0], float("inf")
+            lo, hi, abierta = nums[0], float("inf"), True
         if (lo < smlmv <= hi) or (lo == 0 and smlmv <= hi):
-            if hi - lo < ancho_min:
-                mejor, ancho_min = op, hi - lo
+            # Las bandas cerradas siempre ganan sobre la abierta
+            ancho = (hi - lo) if not abierta else float("inf")
+            if ancho < ancho_min or (mejor is None):
+                mejor, ancho_min = op, ancho
     if mejor is None:
         mejor = max(OPC["rango_monto_desembolsado"],
                     key=lambda o: max([float(x) for x in re.findall(r"(\d+)", o)] or [0]))
