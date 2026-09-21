@@ -71,6 +71,54 @@ entrenamiento ocho veces menor.
 - `requirements.txt` — dependencias, alineadas con el entorno de entrenamiento
 - `modelo_mercado.joblib`, `modelo_riesgo.joblib`, `config_app.joblib` — artefactos
 
+## Cómo reproducir el cuaderno
+
+Los datos están en la carpeta `data/`:
+
+| Archivo | Contenido |
+|---|---|
+| `credito_empresarial_raw.parquet` | 1.454.868 registros crudos, 12 cortes semanales (jul 2025 – jun 2026) |
+| `credito_empresarial_clean.parquet` | 620.020 registros tras las exclusiones por régimen de precio |
+| `tibc_2025_2026.csv` | Tasa de interés bancario corriente certificada por modalidad |
+| `topes_usura_mensual.csv` | Topes de usura derivados (1,5 × TIBC), mes × modalidad |
+
+### Opción 1 — Google Colab (recomendada)
+
+1. Abrir `Proyecto1_Chowdhury_Rodriguez.ipynb` en Colab.
+2. Ejecutar la primera celda (instala `pyarrow` e importa las librerías).
+3. Ejecutar la segunda celda. Busca los datos en Google Drive; si no los
+   encuentra, abre un selector para subirlos desde el computador. Descargar
+   los cuatro archivos de `data/` y seleccionarlos ahí.
+4. Ejecutar el resto de arriba a abajo.
+
+Alternativa sin subir archivos a mano — clonar el repositorio dentro de Colab
+y apuntar `DATA_DIR` a la carpeta, ejecutando esto **antes** de la celda de
+carga de datos:
+
+```python
+!git clone https://github.com/USUARIO/credito-justo-mipymes.git
+DATA_DIR = "/content/credito-justo-mipymes/data"
+```
+
+(reemplazar `USUARIO` por el propietario del repositorio)
+
+### Opción 2 — Local
+
+Clonar el repositorio y ejecutar el cuaderno desde la raíz: la celda de carga
+detecta `./data` automáticamente. Requiere Python 3.12 y las dependencias de
+`requirements.txt`, más `pyarrow`, `matplotlib`, `seaborn` y `jupyter`.
+
+### Tiempos de ejecución
+
+El ciclo completo de los seis modelos tarda unos **34 minutos** en Colab con
+CPU (el Random Forest se lleva 997 segundos de ese total). La búsqueda de
+hiperparámetros añade unos 15 minutos y la importancia por permutación otros
+pocos. Las celdas del EDA corren en segundos.
+
+El orden de ejecución es de arriba a abajo sin saltos. La sección 4
+(preparación) aparece antes de la sección 3 (EDA) de forma deliberada, porque
+el análisis exploratorio se hace sobre el conjunto limpio.
+
 ## Limitaciones
 
 Solo cubre entidades vigiladas: el crédito informal, donde se financian las
