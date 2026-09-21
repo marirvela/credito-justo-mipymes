@@ -4,7 +4,7 @@ Modelo de referencia de precios del crédito empresarial en Colombia para micro,
 pequeñas y medianas empresas, construido con datos abiertos de la
 Superintendencia Financiera.
 
-**App desplegada:** pera
+**App desplegada:** [click aqui url streamlit](https://credito-justo-mipymes-9qvejf3foptekgrbtxzrpr.streamlit.app/)
 
 ## El problema
 
