@@ -1,0 +1,8 @@
+# Versiones alineadas con el entorno de Google Colab donde se entrenaron
+# los modelos. scikit-learn, numpy y joblib deben coincidir exactamente:
+# si no, la deserialización de los .joblib falla o emite advertencias.
+streamlit>=1.39
+scikit-learn==1.6.1
+pandas==2.2.3
+numpy==2.1.3
+joblib==1.6.0
